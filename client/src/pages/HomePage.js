@@ -98,37 +98,64 @@ export default function HomePage() {
 
   return (
     <Container>
-      {/* Embed Neo4j Browser
-      <iframe title="Neo4j Browser" width="100%" height="600" src="https://your-neo4j-instance.cloud.neo4j.com/browser/" frameBorder="0"></iframe> */}
+      <h1>PURPOSE</h1>
+      <p>This web application provides an interactive platform for visualizing statistics pertaining to
+        the United States' domestic trading patterns of the United States. It also displays
+        additional characteristics, such as population size, on its trading partners.
+        <br></br>
+        <br></br>
+        Users can explore detailed analytical findings in detail tin the Countries and Trades pages.
+        They can interactively customize their data exploration by selecting countries,
+        specific time intervals, and the type of exchanged goods by using our
+        user-friendly tools (including sliders, drop-down menus, and pagination).
+        <br></br>
+        <br></br>
+        We anticipate that our web application appeals to researchers and business
+        owners who are interested in import and export strategies, market selection,
+        and supply chain optimization.</p>
 
-      {/* CountryCard is a custom component that we made. selectedCountryId && <CountryCard .../> makes use of short-circuit logic to only render the CountryCard if a non-null song is selected */}
-      {selectedCountryId && <CountryCard songId={selectedCountryId} handleClose={() => setSelectedCountryId(null)} />}
-      {/* <h2>Check out your country of the day:&nbsp;
-        <Link onClick={() => setSelectedCountryId(countryOfTheDay.song_id)}>{countryOfTheDay.title}</Link>
-      </h2>
-      <Divider /> */}
-      <h2>Most Active Countries</h2>
-      <LazyTable route={`http://${config.server_host}:${config.server_port}/author/name/`} columns={countryColumns} />
-      <Divider />
-      {/* TODO (TASK 16): add a h2 heading, LazyTable, and divider for top albums. Set the LazyTable's props for defaultPageSize to 5 and rowsPerPageOptions to [5, 10] */}
-      <h2>Most Traded Commodities</h2>
-      <LazyTable route={`http://${config.server_host}:${config.server_port}/author/name/`} columns={commodityColumns} />
-      <Divider />
-      {/* TODO (TASK 17): add a paragraph (<p>text</p>) that displays the value of your author state variable from TASK 13 */}
+      <br></br>
+      <br></br>
+      <br></br>
 
-      <h1>Trading Economics Web Application</h1>
-      <h4>Purpose of website and database</h4>
-      <h2>US Trading Export</h2>
+
+      <h1>US TRADING EXPORT</h1>
+
+
+      <h2>All Trade Information</h2>
       <LazyTable route={`http://${config.server_host}:${config.server_port}/trading_export`}
         columns={traidEColumns} defaultPageSize={5} rowsPerPageOptions={[5, 10]} />
-      {<DataGrid
+      {/* {<DataGrid
           rows={expor}
           columns={traidEColumns}
           pageSize={pageSize}
           rowsPerPageOptions={[5, 10, 25]}
           onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
           autoHeight
-        />}
+        />} */}
+
+
+      <br></br>
+      <br></br>
+      <br></br>
+
+
+      <h2>Most Active Countries</h2>
+      <LazyTable route={`http://${config.server_host}:${config.server_port}/author/name/`} columns={countryColumns} />
+      <Divider />
+
+      <br></br>
+      <br></br>
+      <br></br>
+
+      <h2>Most Traded Commodities</h2>
+      <LazyTable route={`http://${config.server_host}:${config.server_port}/author/name/`} columns={commodityColumns} />
+      <Divider />
+
+      <br></br>
+      <br></br>
+      <br></br>
+
       <p>{author}</p>
     </Container>
   );

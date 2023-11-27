@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Container, Divider, Link } from '@mui/material';
 import { NavLink } from 'react-router-dom';
+import { DataGrid } from '@mui/x-data-grid';
 
 import LazyTable from '../components/LazyTable';
 import CountryCard from '../components/CountryCard';
@@ -13,7 +14,7 @@ export default function HomePage() {
   const [selectedCountryId, setSelectedCountryId] = useState(null);
   const [expor, setExpor] = useState([])
   const [pageSize, setPageSize] = useState(10);
-  
+
   // The useEffect hook by default runs the provided callback after every render
   // The second (optional) argument, [], is the dependency array which signals
   // to the hook to only run the provided callback if the value of the dependency array
@@ -26,15 +27,15 @@ export default function HomePage() {
     fetch(`http://${config.server_host}:${config.server_port}/random`)
       .then(res => res.json())
       .then(resJson => setCountryOfTheDay(resJson));
-    
+
     fetch(`http://${config.server_host}:${config.server_port}/trading_export`)
-          .then(res => res.json())
-          .then(resJson => {
-            const expoID = resJson.map((expo) => ({cat: expo.Category, val: expo.TotalExportValue}));
-            setExpor(expoID)
-          })
-          .catch(error => console.error(error));
-    
+      .then(res => res.json())
+      .then(resJson => {
+        const expoID = resJson.map((expo) => ({ cat: expo.Category, val: expo.TotalExportValue }));
+        setExpor(expoID)
+      })
+      .catch(error => console.error(error));
+
     // TODO (TASK 14): add a fetch call to get the app author (name not pennkey) and store it in the state variable
     // Hint: note that the app author is a string, not a JSON object. To convert to text, call res.text() instead of res.json()
     fetch(`http://${config.server_host}:${config.server_port}/author/name`)
@@ -84,7 +85,7 @@ export default function HomePage() {
     },
   ]
 
- const traidEColumns = [
+  const traidEColumns = [
     {
       field: 'category',
       headerName: 'Category',
@@ -97,8 +98,8 @@ export default function HomePage() {
 
   return (
     <Container>
-      {/* Embed Neo4j Browser */}
-      <iframe title="Neo4j Browser" width="100%" height="600" src="https://your-neo4j-instance.cloud.neo4j.com/browser/" frameBorder="0"></iframe>
+      {/* Embed Neo4j Browser
+      <iframe title="Neo4j Browser" width="100%" height="600" src="https://your-neo4j-instance.cloud.neo4j.com/browser/" frameBorder="0"></iframe> */}
 
       {/* CountryCard is a custom component that we made. selectedCountryId && <CountryCard .../> makes use of short-circuit logic to only render the CountryCard if a non-null song is selected */}
       {selectedCountryId && <CountryCard songId={selectedCountryId} handleClose={() => setSelectedCountryId(null)} />}
@@ -114,20 +115,20 @@ export default function HomePage() {
       <LazyTable route={`http://${config.server_host}:${config.server_port}/author/name/`} columns={commodityColumns} />
       <Divider />
       {/* TODO (TASK 17): add a paragraph (<p>text</p>) that displays the value of your author state variable from TASK 13 */}
-    
-        <h1>Trading Economics Web Application</h1>
-    <h4>Purpose of website and database</h4>
+
+      <h1>Trading Economics Web Application</h1>
+      <h4>Purpose of website and database</h4>
       <h2>US Trading Export</h2>
-      <LazyTable route={`http://${config.server_host}:${config.server_port}/trading_export`} 
-      columns={traidEColumns} defaultPageSize={5} rowsPerPageOptions={ [5, 10]}/>
-      <DataGrid
+      <LazyTable route={`http://${config.server_host}:${config.server_port}/trading_export`}
+        columns={traidEColumns} defaultPageSize={5} rowsPerPageOptions={[5, 10]} />
+      {<DataGrid
           rows={expor}
           columns={traidEColumns}
           pageSize={pageSize}
           rowsPerPageOptions={[5, 10, 25]}
           onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
           autoHeight
-        />
+        />}
       <p>{author}</p>
     </Container>
   );
